@@ -4,27 +4,38 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // app은 변수명
         App app = new App();
-        App.run();
+        // 앱을 실행
+        app.run();
     }
 }
 
-class App {
-    public static void run() {
-        System.out.println("== 명언 앱 ==");
-        // 스캐너(키보드(System.in)을 스캔하는) 객체를 생성
-        Scanner scanner = new Scanner(System.in);
+    class App {
+        public void run() {
+            // 입력 받기 위해 스캐너 생성
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("=== 명언 앱 ===");
+            while (true) {
+                System.out.print("명령) ");
+//                System.out.println("입력된 명령어: %s".formatted(cmd));
+                String cmd = scanner.nextLine();
+                if (cmd.equals("등록")){
+                    System.out.print("명언 : ");
+                    String wise_saying = scanner.nextLine();
+                    System.out.print("작가 : ");
+                    String author = scanner.nextLine();
+                }
 
-        while (true) {
-            System.out.print("명령) ");
-            // sacnner.nextline
-            String cmd = scanner.nextLine();
-
-            if (cmd.equals("종료")) {
-                break;
+                // 문자열은 ==으로 비교할 수 없고, .equals로 비교
+                if (cmd.equals("종료")){
+                    break;
+                }
             }
+            scanner.close();
         }
-
-        scanner.close();
     }
-}
+
+
+
+
