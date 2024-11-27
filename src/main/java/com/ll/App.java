@@ -30,7 +30,7 @@ public class App {
                 actionAdd();
             } else if (cmd.equals("목록")) {
                 actionlist();
-            } else if (cmd.startsWith("삭제")) {
+            } else if (cmd.equals("삭제")) {
                 // 이 코드로는 . 이나 한글처럼 숫자가 아닌 변환 불가한 내용이 들어갔을 때 터짐
                 System.out.println("삭제할 번호를 입력해 주세요.");
                 String deleteNum = scanner.nextLine();
@@ -43,11 +43,48 @@ public class App {
                     continue;
                 }
                 actionDelete(deleteId);
+            } else if (cmd.equals("수정")) {
+                System.out.println("수정할 번호를 입력해 주세요.");
+                String ModifyNum = scanner.nextLine();
+                int ModifyId = 0;
+                try {
+                    ModifyId = Integer.parseInt(ModifyNum);
+                }
+                catch ( NumberFormatException e ) {
+                    System.out.println("숫자를 입력해주세요.");
+                    continue;
+                }
+                actionModify(ModifyId);
             }
         }
         scanner.close();
     }
 
+    private void actionModify(int ModifyId) {
+        WiseSaying foundWiseSaying = null;
+
+        for (WiseSaying wiseSaying : wiseSayings) {
+            if (wiseSaying.getId() == ModifyId) {
+                foundWiseSaying = wiseSaying;
+                break;
+            }
+        }
+        if (foundWiseSaying == null) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(ModifyId));
+            return;
+        }
+            System.out.println("기존 명언: %s".formatted(foundWiseSaying.getContent()));
+            System.out.println("새로운 명언: ");
+            String content = scanner.nextLine();
+            System.out.println("기존 작가: %s".formatted(foundWiseSaying.getAuthor()));
+            System.out.println("새로운 작가: ");
+            String author = scanner.nextLine();
+            foundWiseSaying.setContent(content);
+            foundWiseSaying.setAuthor(author);
+            System.out.println("%d번 명언이 수정되었습니다.".formatted(ModifyId));
+
+
+    }
     private void makeSampleData() {
         addWiseSaying("sample 1","sampel_1");
         addWiseSaying("sample 2","sampel_2");
