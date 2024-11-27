@@ -30,11 +30,18 @@ public class App {
                 actionAdd();
             } else if (cmd.equals("목록")) {
                 actionlist();
-            } else if (cmd.startsWith("삭제")) { // 삭제로 시작하는 내용은 해당
+            } else if (cmd.startsWith("삭제")) {
                 // 이 코드로는 . 이나 한글처럼 숫자가 아닌 변환 불가한 내용이 들어갔을 때 터짐
                 System.out.println("삭제할 번호를 입력해 주세요.");
                 String deleteNum = scanner.nextLine();
-                int deleteId = Integer.parseInt(deleteNum);
+                int deleteId = 0;
+                try {
+                    deleteId = Integer.parseInt(deleteNum);
+                }
+                catch ( NumberFormatException e ) {
+                    System.out.println("숫자를 입력해주세요.");
+                    continue;
+                }
                 actionDelete(deleteId);
             }
         }
@@ -80,6 +87,6 @@ public class App {
     private void actionDelete(int deleteId) {
         boolean removed = wiseSayings.removeIf(wiseSaying -> wiseSaying.getId() == deleteId);
         if (removed) System.out.println("%d번 명언을 삭제했습니다.".formatted(deleteId));
+        else System.out.println("%d번 명언은 존재하지 않습니다.".formatted(deleteId));
     }
-
 }
